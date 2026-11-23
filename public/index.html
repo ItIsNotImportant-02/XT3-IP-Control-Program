@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XT3 Control</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">XT3 Control</div>
+    <div class="pill" id="conn" title="Stav připojení">odpojeno</div>
+    <div class="status">
+      <div><span class="lbl">Kanál</span> <span id="st-state">–</span></div>
+      <div><span class="lbl">Klip</span> <span id="st-clip">–</span></div>
+      <div class="tc" id="st-tc">--:--:--:--</div>
+    </div>
+    <div class="spacer"></div>
+    <button id="btn-still" title="Zastavit obraz (STILL)">❚❚ Pauza</button>
+    <button id="btn-continue" title="Pokračovat (CONTINUE)">▶ Pokračovat</button>
+    <button id="btn-stop" class="danger-outline" title="STOP = černá ve výstupu">■ Stop</button>
+    <button id="btn-arm" class="arm">ZAJIŠTĚNO</button>
+    <button id="btn-settings" title="Nastavení">⚙</button>
+  </header>
+
+  <nav class="pages" id="pages"></nav>
+
+  <main>
+    <section id="grid" class="grid" aria-label="Stránka klipů"></section>
+    <section id="other-wrap" class="other" hidden>
+      <h2>Ostatní klipy</h2>
+      <div id="other" class="other-list"></div>
+    </section>
+    <p id="empty" class="empty">Žádné klipy. Připoj se v nastavení (⚙) nebo zkus simulátor.</p>
+  </main>
+
+  <footer>
+    <button id="btn-refresh">↻ Načíst klipy</button>
+    <span id="mode-label" class="muted"></span>
+    <div class="spacer"></div>
+    <button id="btn-log">Log komunikace</button>
+  </footer>
+
+  <aside id="log" class="log" hidden>
+    <div class="log-head">
+      <strong>Log komunikace (hex)</strong>
+      <button id="btn-log-close">✕</button>
+    </div>
+    <pre id="log-body"></pre>
+  </aside>
+
+  <dialog id="settings">
+    <form method="dialog" id="settings-form">
+      <h2>Nastavení</h2>
+      <label>Připojení
+        <select name="transport">
+          <option value="sim">Simulátor (bez EVS)</option>
+          <option value="serial">RS-422 (USB převodník, COM port)</option>
+          <option value="tcp">TCP (převodník sériová linka ↔ Ethernet)</option>
+        </select>
+      </label>
+      <label>Spuštění klipu
+        <select name="takeMode">
+          <option value="cut">Střih: načíst na PGM a pustit</option>
+          <option value="prv">Test PGM/PRV: načíst na PRV a pustit (prolínačka EVS?)</option>
+        </select>
+      </label>
+      <fieldset data-ch="pgm">
+        <legend>Kanál PGM</legend>
+        <label class="serial">COM port <select name="pgm.path"></select></label>
+        <label class="tcp">Adresa <input name="pgm.host"></label>
+        <label class="tcp">TCP port <input name="pgm.tcpPort" type="number"></label>
+      </fieldset>
+      <fieldset data-ch="prv">
+        <legend>Kanál PRV (jen pro test PGM/PRV)</legend>
+        <label class="serial">COM port <select name="prv.path"></select></label>
+        <label class="tcp">Adresa <input name="prv.host"></label>
+        <label class="tcp">TCP port <input name="prv.tcpPort" type="number"></label>
+      </fieldset>
+      <p class="muted">RS-422: 38400 Bd, 8 bitů, lichá parita, 1 stop bit (standard VDCP).</p>
+      <div class="actions">
+        <button type="button" id="btn-ports">↻ COM porty</button>
+        <div class="spacer"></div>
+        <button value="cancel">Zavřít</button>
+        <button value="save" class="primary">Uložit a připojit</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

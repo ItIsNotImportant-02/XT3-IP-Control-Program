@@ -1,0 +1,20 @@
+{
+  "name": "xt3-control",
+  "version": "0.1.0",
+  "description": "Ovládání serveru EVS XT3 z PC přes VDCP (RS-422): stránka klipů, klik = přehrát.",
+  "type": "module",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "sim": "node tools/sim.js",
+    "sniff": "node tools/sniff.js",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "dependencies": {
+    "serialport": "^13.0.0"
+  }
+}
