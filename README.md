@@ -32,7 +32,7 @@ Zatím neumí: prolínačku (čeká na test ve voze), náhledy klipů a jména k
    npm install
    ```
 
-   Repozitář je soukromý, takže se Git může zeptat na přihlášení ke GitHubu. Dokud není tato verze sloučená do hlavní větve, přidej ke `git clone` ještě `-b claude/project-thread-ftzju8`.
+   Repozitář je soukromý, takže se Git může zeptat na přihlášení ke GitHubu.
 
 4. Spuštění: dvojklik na **`start.bat`** ve složce `D:\Projects\XT3-Control`, nebo v příkazovém řádku `npm start`.
    Otevře se prohlížeč s adresou <http://localhost:8080>. Program běží, dokud je otevřené černé okno.
