@@ -95,3 +95,33 @@ Hardware: XT3 má 6× RS‑422 (6U šasi) nebo 4× RS‑422 (4U), 2× RS‑232, 
 - [Wikipedia – 9‑Pin Protocol](https://en.wikipedia.org/wiki/9-Pin_Protocol)
 - [vvvv fórum – dotaz na ovládání EVS](https://vvvv.org/node/51818)
 - [EVS – licencování XT‑VIA (2024)](https://evs.com/company/news/evs-redefines-production-flexibility-new-licensing-model-xt-via)
+
+## 7. Posouzení konkrétních funkcí (odpověď z 23. 11.)
+
+Situace: server se za 14 dní instaluje do vozu, test bude mimo přenos. Verze softwaru zatím neznámá.
+
+| Funkce | Proveditelnost | Jak |
+|---|---|---|
+| Celá stránka klipů / 3D zobrazení, ovládání myší | **Ano** | Čistě na straně aplikace. Seznam klipů se načte ze serveru protokolem VDCP (příkazy pro výpis ID klipů a délky). Mřížku page/bank/pozice/kamera (LSM ID typu 111A) vykreslí program. |
+| Klik na klip → hned jede do výstupu | **Ano, střih** | VDCP: cue klipu na kanálu a play. Zpoždění typicky zlomky sekundy, ověřit na místě. |
+| Klik → jede **s prolínačkou** | **Ano, s podmínkou** | Standardní protokoly prolínačku na jednom kanálu neumí. Řešení A/B: dva přehrávací kanály, program připraví klip na volném kanálu a prolínačku udělá mixpult ve voze (přes GPI nebo protokol mixpultu). Prolínačku uvnitř EVS (mix on one channel) přes veřejné protokoly ovládat neumíme. |
+| Low‑res náhledy klipů | **Částečně** | Po sériovém protokolu obraz nepřenese. Reálná cesta: vyhradit jeden výstupní kanál EVS na náhledy, program na něm postupně cueuje klipy a grabuje snímek SDI kartou (např. Blackmagic DeckLink/UltraStudio). Cca 1 s na klip, náhledy se doplňují na pozadí. Síťové náhledy (jak to dělá IPDirector) vyžadují proprietární rozhraní EVS. |
+
+### Co je nutné ověřit ve voze
+
+1. Verze Multicam softwaru a licence (Options codes).
+2. Zda jde nastavit kanál(y) řízené protokolem VDCP vedle LSM ovladače.
+3. Jak EVS přes VDCP pojmenovává klipy (LSM ID, VarID) a jestli jsou vidět klipy vytvořené na LSM.
+4. Doba od cue do play, chování při klipu, který se ještě nahrává.
+
+### Plán první verze (14 dní)
+
+1. Aplikace pro Windows (Electron + TypeScript + knihovna `serialport`, 3D přes three.js).
+2. Simulátor XT3 (falešný VDCP server), aby šlo vyvíjet a testovat bez EVS.
+3. Ovladač VDCP: výpis klipů, cue, play, stop, stav kanálu. Nebezpečné příkazy (mazání, nahrávání) v programu vůbec nebudou.
+4. Mřížka stránky klipů ovládaná myší, klik = cue + play (střih).
+5. Režim A/B pro prolínačku (dva kanály + GPI/mixpult), pokud bude ve voze k dispozici.
+6. Testovací režim „jen čtení“ a log veškeré komunikace pro diagnostiku na místě.
+7. Náhledy až ve druhé verzi, pokud bude volný kanál a capture karta.
+
+Nákup: 1–2× USB→RS‑422 převodník (FTDI), kabel DB9 se správným zapojením. Volitelně SDI capture karta pro náhledy.
