@@ -7,12 +7,15 @@ Vezmi s sebou: notebook s programem (vyzkoušený na simulátoru), 1–3 USB→R
 ## 0. Zapiš si
 
 - [ ] Verzi softwaru (Multicam) na XT3 – je vidět při startu serveru a v Setup.
-- [ ] Seznam licencí (okno Options / License codes) – vyfoť.
+- [ ] Seznam licencí (okno Options / License codes) – vyfoť. Hledej hlavně (čísla podle rešerše, ověřit na serveru):
+  - **23 / 24** – PGM/PRV mix na jednom kanálu (Conditional Mix / Always Mix PRV). Bez nich EVS prolínačku PGM/PRV neudělá.
+  - **35** – Spotbox (režim, ve kterém běží protokoly jako VDCP).
+  - **123** – LinX (ovládání po Ethernetu). Pokud je, otevírá se pozdější cesta po síti, např. přes bránu [Pynch Nexa](https://github.com/pynch-tv/Nexa).
 - [ ] Režim serveru a počet kanálů (LSM, Spotbox, počet IN/OUT).
 
 ## 1. Nastavení portu VDCP na EVS
 
-V konfiguraci serveru (Multicam Setup → záložka Channels / Protocol, podle verze) přiřaď jednomu výstupnímu kanálu **ovládání protokolem VDCP** na volném RS‑422 portu. Kanál, který řídí LSM ovladač, typicky nejde zároveň řídit protokolem. Vyfoť obrazovky nastavení, ať víme, co přesně se dá zvolit (hlavně jestli jde zvolit „PGM/PRV“ nebo „mix“ pro protokolový kanál).
+V konfiguraci serveru (Multicam Setup → záložka Channels / Protocol, podle verze) přiřaď jednomu výstupnímu kanálu **ovládání protokolem VDCP** na volném RS‑422 portu **2 až 6. Port 1 nepoužívej** – podle rešerše může přes něj fungovat vzdálený reset serveru (reset jumper), takže by se server mohl restartovat. Kanál, který řídí LSM ovladač, typicky nejde zároveň řídit protokolem. Vyfoť obrazovky nastavení, ať víme, co přesně se dá zvolit (hlavně jestli jde zvolit „PGM/PRV“ nebo „mix“ pro protokolový kanál).
 
 ## 2. Základní test programu (režim Střih)
 

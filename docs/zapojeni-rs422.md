@@ -6,6 +6,8 @@
 - **Konektory DB9 samec** (na EVS jsou porty RS‑422 jako DB9 samice) a kousek stíněného kabelu se 2 kroucenými páry.
 - Na odposlech: **DB9 samec + DB9 samice** na „T“ (odbočku), aby šel původní kabel ovladače protáhnout a zároveň z něj odbočit.
 
+Alternativa k USB: **převodník Ethernet ↔ RS‑422** (serial device server, např. Moxa NPort). Program se pak připojí volbou „TCP“ v nastavení (IP adresa a port převodníku, převodník nastavit na 38400 Bd, 8 bitů, lichá parita, režim TCP server / raw).
+
 Pokud je převodník jen „RS‑485“, musí umět plný duplex (4 vodiče). Dvouvodičový RS‑485 nestačí.
 
 ## Piny DB9 (standard Sony 9‑pin, který používá i VDCP)
@@ -21,6 +23,8 @@ Pokud je převodník jen „RS‑485“, musí umět plný duplex (4 vodiče). D
 Rozložení odpovídá dokumentaci VDCP a [návodu Vizrt pro EVS](https://docs.vizrt.com/viz-engine-guide/5.4/EVS_Video_Server_Control.html). **Na konkrétním XT3 to ověř** v Hardware manuálu (kapitola RS‑422 / Remote ports) nebo multimetrem, než kabel zapojíš.
 
 ## 1. Ovládání (program ↔ EVS)
+
+**Na EVS použij port RS‑422 číslo 2 až 6, ne port 1.** Podle rešerše může port 1 sloužit i pro vzdálený reset serveru (reset jumper).
 
 | Převodník | → pin DB9 na EVS |
 |---|---|
@@ -40,7 +44,7 @@ Cíl: zaznamenat, co ovladač posílá serveru, když ručně uděláš „klip 
 
 **Důležité:** z převodníků se zapojují **jen přijímací vodiče RX+ a RX− a zem**. Vysílací vodiče TX nech nezapojené (zaizoluj je). Pak převodník na linku nic nepošle a ovladač se serverem fungují dál normálně.
 
-Odbočka se vloží do kabelu mezi LSM ovladač a jeho port na EVS:
+Odbočka se vloží do kabelu (nic nezapojuj „naslepo“ do portu 1, viz výše) mezi LSM ovladač a jeho port na EVS:
 
 | Převodník | Poslouchá směr | RX+ na pin | RX− na pin | GND |
 |---|---|---|---|---|
